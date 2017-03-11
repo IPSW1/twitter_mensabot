@@ -4,7 +4,7 @@ import datetime
 
 
 def get_date(dt):
-    return "{}.{:02}.{}".format(dt.day, dt.month, dt.year)
+    return dt.strftime("%d.%m.%Y")
 
 def get_week(dt):
     return datetime.date(dt.year, dt.month, dt.day).isocalendar()[1]
