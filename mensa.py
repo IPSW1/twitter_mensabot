@@ -25,7 +25,7 @@ def main():
     # menu is saved as "[week number].csv"
     url = "https://www.stwno.de/infomax/daten-extern/csv/UNI-P/{}.csv".format(week)
     response = requests.get(url)
-    menu = response.content.decode('utf-8', 'ignore') # FIXME: don't ignore umlauts
+    menu = response.content.decode('ISO-8859-1')
 
     # format menu and only use data for current day
     menureader = csv.reader(menu.splitlines(), delimiter=';')
