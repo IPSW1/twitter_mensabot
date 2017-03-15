@@ -15,6 +15,9 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 twit_api = tweepy.API(auth)
 
+# types of dishes as described in the csv file
+dish_types = ["S", "HG", "B", "N"]
+
 
 def main():
     # get current date and week number
@@ -40,14 +43,8 @@ def main():
         post += "(https://stwno.de/de/gastronomie/speiseplan/uni-passau):"
         twit_api.update_status(status=post)
 
-        # soups
-        tweet_menu(meals, "S")
-        # main dish
-        tweet_menu(meals, "HG")
-        # side dishes
-        tweet_menu(meals, "B")
-        # desserts
-        tweet_menu(meals, "N")
+        for dish in dish_types:
+            tweet_menu(meals, dish)
 
         post = "-------------------------------\nGuten Appetit!"
         twit_api.update_status(status=post)
@@ -66,17 +63,6 @@ def get_week(dt):
 
 
 def tweet_menu(menu, meal_type):
-    if meal_type == "S":
-        tweet_menu_type(menu, meal_type)
-    elif meal_type == "HG":
-        tweet_menu_type(menu, meal_type)
-    elif meal_type == "B":
-        tweet_menu_type(menu, meal_type)
-    elif meal_type == "N":
-        tweet_menu_type(menu, meal_type)
-
-
-def tweet_menu_type(menu, meal_type):
     index = 1
     for item in menu:
         if item[2].startswith(meal_type):
